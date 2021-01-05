@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodPal.Orders.Api</name>
+    </assembly>
+    <members>
+        <member name="M:FoodPal.Orders.Api.Startup.GetXmlCommentsFilePath">
+            <summary>
+            Docs path
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Startup.GetDtosXmlCommentsFilePath">
+            <summary>
+            DTOs doc path
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
