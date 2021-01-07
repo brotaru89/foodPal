@@ -4,6 +4,55 @@
         <name>FoodPal.Orders.Api</name>
     </assembly>
     <members>
+        <member name="T:FoodPal.Orders.Api.Controllers.ApiBaseController">
+            <summary>
+            Base controller class for TDS
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Api.Controllers.OrdersController">
+            <summary>
+            Providers API methods for handling order requests.
+            </summary>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.#ctor">
+            <summary>
+            Constructor for Orders controller.
+            </summary>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.GetOrders(System.Int32,System.Int32)">
+            <summary>
+            Returns a paged list of orders.
+            </summary>
+            <param name="page">Current result page no.</param>
+            <param name="pageSize">No. of returned records per page.</param>
+            <returns>A paginated collection of orders, sorted by last modified date - the most recently updated will be first in the result set.</returns>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.GetOrderById(System.Int32)">
+            <summary>
+            Returns the specified order, if exists.
+            </summary>
+            <param name="orderId">The order identifier.</param>
+            <returns>An object containing the order details.</returns>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.CreateOrder(FoodPal.Orders.Dtos.OrderDto)">
+            <summary>
+            Creates an order.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Host builder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="M:FoodPal.Orders.Api.Startup.GetXmlCommentsFilePath">
             <summary>
             Docs path
@@ -15,6 +64,16 @@
             DTOs doc path
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:FoodPal.Orders.Api.Versioning.VersioningInfo">
+            <summary>
+            API Versioning utility class.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Api.Versioning.VersioningInfo.MajorVersion">
+            <summary>
+            Major version.
+            </summary>
         </member>
     </members>
 </doc>

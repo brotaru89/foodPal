@@ -5,7 +5,17 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Api", "src\FoodPal.Orders.Api\FoodPal.Orders.Api.csproj", "{677D1308-8322-4EE0-A4E7-6129D739E4BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Dtos", "src\FoodPal.Orders.Dtos\FoodPal.Orders.Dtos.csproj", "{31A48CCA-5C6F-4136-A3A5-0B23721E94D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Dtos", "src\FoodPal.Orders.Dtos\FoodPal.Orders.Dtos.csproj", "{31A48CCA-5C6F-4136-A3A5-0B23721E94D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Models", "src\FoodPal.Orders.Models\FoodPal.Orders.Models.csproj", "{5094271C-FE04-4BA5-9101-907E8563CF45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Services", "src\FoodPal.Orders.Services\FoodPal.Orders.Services.csproj", "{0DBAB705-DAEE-4883-B024-BD1B43DFD1A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Contracts", "src\FoodPal.Orders.Contracts\FoodPal.Orders.Contracts.csproj", "{5A110744-B428-4A0F-A834-9748EC25D9BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Data", "src\FoodPal.Orders.Data\FoodPal.Orders.Data.csproj", "{9E60084B-06C7-424A-8286-AF372EF9D47C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Data.Contracts", "src\FoodPal.Orders.Data.Contracts\FoodPal.Orders.Data.Contracts.csproj", "{0A82981F-2622-4A17-94DD-C4F8063E26F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,26 @@ Global
 		{31A48CCA-5C6F-4136-A3A5-0B23721E94D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31A48CCA-5C6F-4136-A3A5-0B23721E94D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31A48CCA-5C6F-4136-A3A5-0B23721E94D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5094271C-FE04-4BA5-9101-907E8563CF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5094271C-FE04-4BA5-9101-907E8563CF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5094271C-FE04-4BA5-9101-907E8563CF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5094271C-FE04-4BA5-9101-907E8563CF45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DBAB705-DAEE-4883-B024-BD1B43DFD1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DBAB705-DAEE-4883-B024-BD1B43DFD1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DBAB705-DAEE-4883-B024-BD1B43DFD1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DBAB705-DAEE-4883-B024-BD1B43DFD1A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A110744-B428-4A0F-A834-9748EC25D9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A110744-B428-4A0F-A834-9748EC25D9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A110744-B428-4A0F-A834-9748EC25D9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A110744-B428-4A0F-A834-9748EC25D9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E60084B-06C7-424A-8286-AF372EF9D47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E60084B-06C7-424A-8286-AF372EF9D47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E60084B-06C7-424A-8286-AF372EF9D47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E60084B-06C7-424A-8286-AF372EF9D47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A82981F-2622-4A17-94DD-C4F8063E26F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A82981F-2622-4A17-94DD-C4F8063E26F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A82981F-2622-4A17-94DD-C4F8063E26F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A82981F-2622-4A17-94DD-C4F8063E26F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,7 @@
+using AutoMapper;
 using FoodPal.Orders.Api.Versioning;
+using FoodPal.Orders.Data;
+using FoodPal.Orders.Services.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,6 +26,9 @@ namespace FoodPal.Orders.Api
 		private readonly int _majorVersion;
 		private readonly string _majorVersionString;
 
+		private const string ApiTitle = "FoodPal - Orders API";
+		private const string ApiDescription = "FoodPal - Orders API microservice";
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -32,10 +38,17 @@ namespace FoodPal.Orders.Api
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		/// <summary>
+		/// This method gets called by the runtime. Use this method to add services to the container.
+		/// </summary>
+		/// <param name="services"></param>
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
+			services
+				.AddLogging()
+				.AddControllers();
+
+			services.AddAutoMapper(AutoMapperConfiguration.ConfigureAutoMapperProfiles);
 
 			// Register API versioning
 			services.AddApiVersioning(options =>
@@ -65,8 +78,8 @@ namespace FoodPal.Orders.Api
 				c.SwaggerDoc(_majorVersionString, new OpenApiInfo
 				{
 					Version = _majorVersionString,
-					Title = "FoodPal - Orders API",
-					Description = "FoodPal - Orders API microservice"
+					Title = ApiTitle,
+					Description = ApiDescription
 				});
 
 				// Set the comments path for the Swagger JSON and UI.
@@ -92,7 +105,6 @@ namespace FoodPal.Orders.Api
 		/// <returns></returns>
 		protected static string GetDtosXmlCommentsFilePath()
 		{
-			// TODO: Investigate if this can be made generic and for multiple libraries
 			var xmlFile = $"FoodPal.Orders.Dtos.xml";
 			var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 			return xmlPath;
@@ -116,7 +128,7 @@ namespace FoodPal.Orders.Api
 
 			app.UseSwaggerUI(c =>
 			{
-				c.SwaggerEndpoint($"/swagger/{_majorVersionString}/swagger.json", $"Orders API {_majorVersionString}");
+				c.SwaggerEndpoint($"/swagger/{_majorVersionString}/swagger.json", $"{ApiTitle} {_majorVersionString}");
 			});
 
 			app.UseRouting();

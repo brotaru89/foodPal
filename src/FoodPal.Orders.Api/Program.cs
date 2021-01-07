@@ -2,10 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Api
 {
@@ -16,6 +12,11 @@ namespace FoodPal.Orders.Api
 			CreateHostBuilder(args).Build().Run();
 		}
 
+		/// <summary>
+		/// Host builder
+		/// </summary>
+		/// <param name="args"></param>
+		/// <returns></returns>
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
 				.ConfigureAppConfiguration((hostingContext, configSources) =>

@@ -4,5 +4,130 @@
         <name>FoodPal.Orders.Dtos</name>
     </assembly>
     <members>
+        <member name="T:FoodPal.Orders.Dtos.DeliveryDetailsDto">
+            <summary>
+            Delivery details data transfer object.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.Address">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.City">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.County">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.ZipCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.Country">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.DeliveryDetailsDto.Phone">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderDto">
+            <summary>
+            Order data transfer object.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerId">
+            <summary>
+            Customer identifier
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerName">
+            <summary>
+            Customer name.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerEmail">
+            <summary>
+            Customer email.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.Items">
+            <summary>
+            Collection of order items.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.DeliveryDetails">
+            <summary>
+            Order delivery details.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.OrderStatus">
+            <summary>
+            Order status.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.Comments">
+            <summary>
+            Additional item comments.
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderItemDto">
+            <summary>
+            Order item data transfer object.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Name">
+            <summary>
+            Item name.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.ItemId">
+            <summary>
+            Item identifier.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.ProviderId">
+            <summary>
+            Item provider identifier.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Quantity">
+            <summary>
+            Quantity, no. of same items.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Price">
+            <summary>
+            Price per item.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.TotalPrice">
+            <summary>
+            Total price (price per item multiplied with quantity).
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderStatusDto">
+            <summary>
+            Order status data transfer object.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderStatusDto.StatusId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderStatusDto.StatusName">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>
