@@ -8,7 +8,7 @@ namespace FoodPal.Orders.Services.Mappers
 	{
 		public OrderProfile()
 		{
-			CreateMap<OrderDto, Order>();
+			CreateMap<NewOrderDto, Order>();
 		}
 	}
 }

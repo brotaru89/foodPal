@@ -14,7 +14,7 @@
             Providers API methods for handling order requests.
             </summary>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.#ctor">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.#ctor(FoodPal.Orders.Contracts.IOrdersService)">
             <summary>
             Constructor for Orders controller.
             </summary>
@@ -34,11 +34,40 @@
             <param name="orderId">The order identifier.</param>
             <returns>An object containing the order details.</returns>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.CreateOrder(FoodPal.Orders.Dtos.OrderDto)">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.CreateOrder(FoodPal.Orders.Dtos.NewOrderDto)">
             <summary>
             Creates an order.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:FoodPal.Orders.Api.Filters.ExceptionFilter">
+            <summary>
+            Custom filter used to handle API internal exceptions
+            </summary>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Filters.ExceptionFilter.#ctor(Microsoft.Extensions.Logging.ILogger{FoodPal.Orders.Api.Filters.ExceptionFilter})">
+            <summary>
+            Filter constructor
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Filters.ExceptionFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <summary>
+            OnActionExecuted
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Filters.ExceptionFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            OnActionExecuting
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Filters.ExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            OnException
+            </summary>
+            <param name="context"></param>
         </member>
         <member name="M:FoodPal.Orders.Api.Program.CreateHostBuilder(System.String[])">
             <summary>

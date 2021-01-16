@@ -1,15 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation" Version="9.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodPal.Orders.Contracts\FoodPal.Orders.Contracts.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Dtos\FoodPal.Orders.Dtos.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.Exceptions\FoodPal.Orders.Exceptions.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.MessageBroker\FoodPal.Orders.MessageBroker.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Models\FoodPal.Orders.Models.csproj" />
   </ItemGroup>
 

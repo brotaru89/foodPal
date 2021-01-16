@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-FoodPal.Orders.BackgroundWorker-4F3041E0-2ED3-4A7C-892D-A1ACA7358343</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FoodPal.Orders.BackgroundServices\FoodPal.Orders.BackgroundServices.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.MessageBroker\FoodPal.Orders.MessageBroker.csproj" />
+  </ItemGroup>
+</Project>

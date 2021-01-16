@@ -1,0 +1,7 @@
+﻿namespace FoodPal.Orders.MessageBroker
+{
+	public static class MessageTypes
+	{
+		public const string NewOrder = "new-order";
+	}
+}

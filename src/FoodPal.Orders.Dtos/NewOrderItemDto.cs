@@ -3,17 +3,12 @@
 	/// <summary>
 	/// Order item data transfer object.
 	/// </summary>
-	public class OrderItemDto
+	public class NewOrderItemDto
 	{
 		/// <summary>
 		/// Item name.
 		/// </summary>
 		public string Name { get; set; }
-		
-		/// <summary>
-		/// Item identifier.
-		/// </summary>
-		public string ItemId { get; set; }
 		
 		/// <summary>
 		/// Item provider identifier.
@@ -29,10 +24,5 @@
 		/// Price per item.
 		/// </summary>
 		public decimal Price { get; set; }
-		
-		/// <summary>
-		/// Total price (price per item multiplied with quantity).
-		/// </summary>
-		public decimal TotalPrice => Price * Quantity;
 	}
 }

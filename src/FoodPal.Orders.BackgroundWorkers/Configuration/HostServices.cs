@@ -1,0 +1,37 @@
+﻿using AutoMapper;
+using FoodPal.Orders.BackgroundServices.Handlers;
+using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
+using FoodPal.Orders.BackgroundServices.Mappers;
+using FoodPal.Orders.BackgroundWorker.Workers;
+using FoodPal.Orders.Data;
+using FoodPal.Orders.MessageBroker;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace FoodPal.Orders.BackgroundWorker.Configuration
+{
+	internal static class HostServices
+	{
+		public static void Configure(HostBuilderContext hostingContext, IServiceCollection services)
+		{
+			// AutoMapper
+			services.AddAutoMapper(typeof(AbstractProfile).Assembly);
+
+			// Service Bus message broker
+			services.Configure<MessageBrokerConnectionSettings>(x => hostingContext.Configuration.Bind("MessageBrokerSettings", x));
+			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
+
+			services.AddTransient<IMessageHandlerFactory, MessageHandlerFactory>();
+			services.AddTransient<NewOrderMessageHandler>();
+
+			var dbConnectionString = hostingContext.Configuration.GetConnectionString("OrdersConnectionString");
+
+			services.AddTransient<IOrdersContextFactory, OrdersContextFactory>();
+			services.AddTransient<IOrdersUnitOfWork, OrdersUnitOfWork>(sp =>
+				new OrdersUnitOfWork(sp.GetService<IOrdersContextFactory>().CreateDbContext(dbConnectionString)));
+
+			services.AddHostedService<NewOrderWorker>();
+		}
+	}
+}

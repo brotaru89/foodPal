@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.IO;
 
 namespace FoodPal.Orders.Data
 {
-	public class OrdersContextFactory : IDesignTimeDbContextFactory<OrdersContext>
+	public class OrdersContextFactory : IDesignTimeDbContextFactory<OrdersContext>, IOrdersContextFactory
 	{
 		public OrdersContext CreateDbContext(string[] args)
 		{
@@ -20,6 +19,14 @@ namespace FoodPal.Orders.Data
 			var connectionString = configuration.GetConnectionString("OrdersConnectionString");
 
 			dbContextBuilder.UseSqlServer(connectionString);
+
+			return new OrdersContext(dbContextBuilder.Options);
+		}
+
+		public OrdersContext CreateDbContext(string connectionString)
+		{
+			var dbContextBuilder = new DbContextOptionsBuilder()
+				.UseSqlServer(connectionString);
 
 			return new OrdersContext(dbContextBuilder.Options);
 		}

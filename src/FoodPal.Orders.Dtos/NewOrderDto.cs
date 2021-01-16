@@ -5,7 +5,7 @@ namespace FoodPal.Orders.Dtos
 	/// <summary>
 	/// Order data transfer object.
 	/// </summary>
-	public class OrderDto
+	public class NewOrderDto
 	{
 		/// <summary>
 		/// Customer identifier
@@ -25,7 +25,7 @@ namespace FoodPal.Orders.Dtos
 		/// <summary>
 		/// Collection of order items.
 		/// </summary>
-		public IEnumerable<OrderItemDto> Items { get; set; }
+		public IEnumerable<NewOrderItemDto> Items { get; set; }
 
 		/// <summary>
 		/// Order delivery details.

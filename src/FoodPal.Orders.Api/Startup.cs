@@ -1,11 +1,16 @@
 using AutoMapper;
+using FluentValidation;
+using FoodPal.Orders.Api.Filters;
 using FoodPal.Orders.Api.Versioning;
-using FoodPal.Orders.Data;
+using FoodPal.Orders.Contracts;
+using FoodPal.Orders.MessageBroker;
+using FoodPal.Orders.Services;
 using FoodPal.Orders.Services.Mappers;
+using FoodPal.Orders.Services.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,11 +18,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Api
 {
@@ -48,7 +50,13 @@ namespace FoodPal.Orders.Api
 				.AddLogging()
 				.AddControllers();
 
+			#region AutoMapper
+
 			services.AddAutoMapper(AutoMapperConfiguration.ConfigureAutoMapperProfiles);
+
+			#endregion
+
+			#region API Versioning
 
 			// Register API versioning
 			services.AddApiVersioning(options =>
@@ -71,6 +79,32 @@ namespace FoodPal.Orders.Api
 				// note: this option is only necessary when versioning by url segment. the SubstitutionFormat
 				// can also be used to control the format of the API version in route templates
 				options.SubstituteApiVersionInUrl = true;
+			});
+
+			#endregion
+
+			#region FluentValidation
+
+			services.AddValidatorsFromAssembly(typeof(InternalValidator<>).Assembly);
+
+			#endregion
+
+			#region Services registration
+
+			services.AddTransient<IExceptionFilter, ExceptionFilter>();
+
+			services.Configure<MessageBrokerConnectionSettings>(x => Configuration.Bind("MessageBrokerSettings", x));
+
+			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
+			services.AddTransient<IOrdersService, OrdersService>();
+
+			#endregion
+
+			services.AddMvc(x =>
+			{
+				x.EnableEndpointRouting = false;
+				x.Filters.Add(new ProducesAttribute("application/json"));
+				x.Filters.AddService(typeof(IExceptionFilter));
 			});
 
 			services.AddSwaggerGen(c =>
