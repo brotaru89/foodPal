@@ -1,7 +1,9 @@
 ﻿using FoodPal.Orders.Contracts;
 using FoodPal.Orders.Dtos;
+using FoodPal.Orders.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Api.Controllers
@@ -24,17 +26,20 @@ namespace FoodPal.Orders.Api.Controllers
 		/// <summary>
 		/// Returns a paged list of orders.
 		/// </summary>
+		/// <param name="customerId"></param>
+		/// <param name="status"></param>
 		/// <param name="page">Current result page no.</param>
 		/// <param name="pageSize">No. of returned records per page.</param>
 		/// <returns>A paginated collection of orders, sorted by last modified date - the most recently updated will be first in the result set.</returns>
 		[HttpGet]
-		[ProducesResponseType(typeof(PagedResultSetDto<NewOrderDto>), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(PagedResultSetDto<OrderDto>), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
-		public async Task<ActionResult<string>> GetOrders(int page = 1, int pageSize = 20)
+		public async Task<ActionResult<string>> GetOrders(string customerId, OrderStatus? status, int page = 1, int pageSize = 20)
 		{
-			return Ok("I'm here!");
+			var orderResult = await _ordersService.GetByFiltersAsync(customerId, status, page, pageSize);
+			return Ok(orderResult);
 		}
 
 		/// <summary>
@@ -44,13 +49,31 @@ namespace FoodPal.Orders.Api.Controllers
 		/// <returns>An object containing the order details.</returns>
 		[HttpGet]
 		[Route("{orderId}")]
-		[ProducesResponseType(typeof(NewOrderDto), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
 		public async Task<ActionResult<string>> GetOrderById(int orderId)
 		{
-			return Ok("I'm here!");
+			var orderResult = await _ordersService.GetByIdAsync(orderId);
+			return Ok(orderResult);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="orderId"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("{orderId}/status")]
+		[ProducesResponseType(typeof(OrderStatusDto), StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
+		public async Task<ActionResult<OrderStatusDto>> GetOrderStatusById(int orderId)
+		{
+			var orderStatus = await _ordersService.GetStatusAsync(orderId);
+			return Ok(orderStatus);
 		}
 
 		/// <summary>
@@ -58,13 +81,29 @@ namespace FoodPal.Orders.Api.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status202Accepted)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
 		public async Task<ActionResult<string>> CreateOrder(NewOrderDto newOrder)
 		{
 			var requestId = await _ordersService.Create(newOrder);
 			return Accepted(requestId);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="orderId"></param>
+		/// <param name="orderStatusPatchDto"></param>
+		/// <returns></returns>
+		[HttpPatch]
+		[ProducesResponseType(StatusCodes.Status202Accepted)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
+		public async Task<ActionResult<string>> PatchOrderStatus(int orderId, OrderStatusPatchDto orderStatusPatchDto)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

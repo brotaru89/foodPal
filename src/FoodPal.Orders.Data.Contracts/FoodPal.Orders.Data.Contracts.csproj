@@ -5,6 +5,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FoodPal.Orders.Enums\FoodPal.Orders.Enums.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Models\FoodPal.Orders.Models.csproj" />
   </ItemGroup>
 

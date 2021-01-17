@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using FoodPal.Orders.BackgroundServices.Handlers;
 using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
-using FoodPal.Orders.BackgroundServices.Mappers;
 using FoodPal.Orders.BackgroundWorker.Workers;
 using FoodPal.Orders.Data;
+using FoodPal.Orders.Mappers;
 using FoodPal.Orders.MessageBroker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

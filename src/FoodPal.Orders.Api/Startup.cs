@@ -3,9 +3,10 @@ using FluentValidation;
 using FoodPal.Orders.Api.Filters;
 using FoodPal.Orders.Api.Versioning;
 using FoodPal.Orders.Contracts;
+using FoodPal.Orders.Data;
+using FoodPal.Orders.Mappers;
 using FoodPal.Orders.MessageBroker;
 using FoodPal.Orders.Services;
-using FoodPal.Orders.Services.Mappers;
 using FoodPal.Orders.Services.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,7 +53,7 @@ namespace FoodPal.Orders.Api
 
 			#region AutoMapper
 
-			services.AddAutoMapper(AutoMapperConfiguration.ConfigureAutoMapperProfiles);
+			services.AddAutoMapper(typeof(AbstractProfile).Assembly);
 
 			#endregion
 
@@ -97,6 +98,12 @@ namespace FoodPal.Orders.Api
 
 			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
 			services.AddTransient<IOrdersService, OrdersService>();
+
+			var dbConnectionString = Configuration.GetConnectionString("OrdersConnectionString");
+
+			services.AddTransient<IOrdersContextFactory, OrdersContextFactory>();
+			services.AddTransient<IOrdersUnitOfWork, OrdersUnitOfWork>(sp =>
+				new OrdersUnitOfWork(sp.GetService<IOrdersContextFactory>().CreateDbContext(dbConnectionString)));
 
 			#endregion
 

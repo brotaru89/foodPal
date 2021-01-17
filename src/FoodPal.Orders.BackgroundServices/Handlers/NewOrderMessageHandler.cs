@@ -4,6 +4,7 @@ using FoodPal.Orders.Data;
 using FoodPal.Orders.Dtos;
 using FoodPal.Orders.MessageBroker;
 using FoodPal.Orders.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace FoodPal.Orders.BackgroundServices.Handlers
@@ -23,6 +24,8 @@ namespace FoodPal.Orders.BackgroundServices.Handlers
 		{
 			var payload = GetEnvelopePayload<NewOrderDto>(messageEnvelope);
 			var newOrder = _mapper.Map<Order>(payload);
+
+			newOrder.CreatedAt = newOrder.LastUpdatedAt = DateTime.Now;
 
 			var createdOrder = await _orderUoW.OrdersRepository.CreateAsync(newOrder);
 		}

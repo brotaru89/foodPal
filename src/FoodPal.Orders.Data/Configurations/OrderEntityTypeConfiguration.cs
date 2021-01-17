@@ -11,7 +11,11 @@ namespace FoodPal.Orders.Data.Configurations
 			builder.Property(x => x.CustomerId).IsRequired();
 			builder.Property(x => x.CustomerName).IsRequired();
 			builder.Property(x => x.CustomerEmail).IsRequired();
+			
 			builder.Property(x => x.Comments).HasMaxLength(200);
+
+			builder.Property(x => x.CreatedAt).IsRequired();
+			builder.Property(x => x.LastUpdatedAt).IsRequired();
 		}
 	}
 }

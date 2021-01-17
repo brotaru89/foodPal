@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace FoodPal.Orders.BackgroundServices.Mappers
+namespace FoodPal.Orders.Mappers
 {
 	public abstract class AbstractProfile : Profile { }
 }

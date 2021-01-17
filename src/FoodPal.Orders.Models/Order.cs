@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FoodPal.Orders.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace FoodPal.Orders.Models
 {
@@ -19,5 +21,9 @@ namespace FoodPal.Orders.Models
 		public DeliveryDetails DeliveryDetails { get; set; }
 
 		public string Comments { get; set; }
+
+		public DateTime CreatedAt { get; set; }
+
+		public DateTime LastUpdatedAt { get; set; }
 	}
 }

@@ -30,8 +30,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FoodPal.Orders.Contracts\FoodPal.Orders.Contracts.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.Data\FoodPal.Orders.Data.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Dtos\FoodPal.Orders.Dtos.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.Enums\FoodPal.Orders.Enums.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Exceptions\FoodPal.Orders.Exceptions.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.Mappers\FoodPal.Orders.Mappers.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Services\FoodPal.Orders.Services.csproj" />
   </ItemGroup>
 

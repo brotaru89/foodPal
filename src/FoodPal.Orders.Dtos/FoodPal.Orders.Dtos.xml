@@ -104,6 +104,86 @@
             Price per item.
             </summary>
         </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerId">
+            <summary>
+            Customer identifier
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerName">
+            <summary>
+            Customer name.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CustomerEmail">
+            <summary>
+            Customer email.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.Items">
+            <summary>
+            Collection of order items.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.DeliveryDetails">
+            <summary>
+            Order delivery details.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.OrderStatus">
+            <summary>
+            Order status.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.Comments">
+            <summary>
+            Additional item comments.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.CreatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderDto.LastUpdatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderItemDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Name">
+            <summary>
+            Item name.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.ProviderId">
+            <summary>
+            Item provider identifier.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Quantity">
+            <summary>
+            Quantity, no. of same items.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.Price">
+            <summary>
+            Price per item.
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.TotalPrice">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FoodPal.Orders.Dtos.OrderStatusDto">
             <summary>
             Order status data transfer object.
@@ -115,6 +195,16 @@
             </summary>
         </member>
         <member name="P:FoodPal.Orders.Dtos.OrderStatusDto.StatusName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Dtos.OrderStatusPatchDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderStatusPatchDto.NewStatus">
             <summary>
             
             </summary>
