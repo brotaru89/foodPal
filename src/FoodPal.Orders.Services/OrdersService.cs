@@ -67,7 +67,7 @@ namespace FoodPal.Orders.Services
 			return _mapper.Map<OrderStatusDto>(orderStatus);
 		}
 
-		public async Task<IEnumerable<OrderDto>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize)
+		public async Task<PagedResultSetDto<OrderDto>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize)
 		{
 			ParameterChecks(new (Func<bool>, Exception)[]
 			{
@@ -75,12 +75,54 @@ namespace FoodPal.Orders.Services
 				( () => pageSize > 0, new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} must be positive")),
 			});
 
-			var orders = await _orderUoW.OrdersRepository.GetByFiltersAsync(customerId, status, page - 1, pageSize);
+			var result = await _orderUoW.OrdersRepository.GetByFiltersAsync(customerId, status, page - 1, pageSize);
 
-			return orders.Any() ? _mapper.Map<List<OrderDto>>(orders) : new List<OrderDto>();
+			if (result.AllOrdersCount == 0)
+				return new PagedResultSetDto<OrderDto>
+				{
+					Data = new List<OrderDto>(),
+					PaginationInfo = new PaginationInfoDto { Page = 1, PageSize = pageSize, Total = 0 }
+				};
+
+			return new PagedResultSetDto<OrderDto>
+			{
+				Data = _mapper.Map<List<OrderDto>>(result.Orders),
+				PaginationInfo = new PaginationInfoDto { Page = page, PageSize = pageSize, Total = result.AllOrdersCount }
+			};
+		}
+
+		public async Task PatchOrder(int orderId, OrderPatchDto orderPatch)
+		{
+			ParameterChecks(new (Func<bool>, Exception)[]
+			{
+				( () => orderId > 0, new ArgumentOutOfRangeException(nameof(orderId), $"{nameof(orderId)} must be positive")),
+			});
+
+			var order = await _orderUoW.OrdersRepository.GetByIdAsync(orderId);
+
+			if (order is null) throw new FoodPalNotFoundException(orderId.ToString());
+
+			switch (orderPatch.PropertyName.ToLowerInvariant())
+			{
+				case "status":
+
+					await _orderUoW.OrdersRepository.UpdateStatusAsync(order, ParseOrderStatus(orderPatch.PropertyValue.ToString()));
+					break;
+				
+				default:
+					throw new Exception($"Patch is not supported for property name '{orderPatch.PropertyName}'");
+			}
 		}
 
 		#region Private Methods
+
+		private OrderStatus ParseOrderStatus(string orderStatus)
+		{
+			if (Enum.TryParse<OrderStatus>(orderStatus, true, out var newOrderStatus))
+				return newOrderStatus;
+
+			throw new Exception($"Cannot parse order status '{orderStatus}'");
+		}
 
 		private void ValidateNewOrder(NewOrderDto newOrder)
 		{

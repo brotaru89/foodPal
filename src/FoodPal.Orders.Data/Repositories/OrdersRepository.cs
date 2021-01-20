@@ -40,7 +40,7 @@ namespace FoodPal.Orders.Data.Repositories
 			return await _ordersContext.FindAsync<Order>(orderId);
 		}
 
-		public async Task<IEnumerable<Order>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize)
+		public async Task<(IEnumerable<Order> Orders, int AllOrdersCount)> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize)
 		{
 			IQueryable<Order> ordersQuery = _ordersContext.Orders.AsNoTracking();
 
@@ -50,17 +50,24 @@ namespace FoodPal.Orders.Data.Repositories
 			if (status.HasValue)
 				ordersQuery = ordersQuery.Where(x => x.Status == status.Value);
 
-			ordersQuery = ordersQuery.Skip(page * pageSize).Take(pageSize);
+			var paginatedOrdersQuery = ordersQuery.Skip(page * pageSize).Take(pageSize);
 
-			var ordersList = await ordersQuery.ToListAsync();
+			var ordersList = await paginatedOrdersQuery.ToListAsync();
+			var allOrdersCount = await ordersQuery.CountAsync();
 
-			return ordersList;
+			return (ordersList, allOrdersCount);
 		}
 
 		public async Task<OrderStatus?> GetStatusAsync(int orderId)
 		{
 			var orderStatus = await _ordersContext.Orders.Where(x => x.Id == orderId).Select(x => x.Status).ToListAsync();
 			return orderStatus.FirstOrDefault();
+		}
+
+		public async Task UpdateStatusAsync(Order orderEntity, OrderStatus newStatus)
+		{
+			orderEntity.Status = newStatus;
+			await _ordersContext.SaveChangesAsync();
 		}
 	}
 }

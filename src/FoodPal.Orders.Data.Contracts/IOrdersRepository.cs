@@ -11,8 +11,10 @@ namespace FoodPal.Orders.Data.Contracts
 		
 		Task<Order> GetByIdAsync(int orderId);
 
-		Task<IEnumerable<Order>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize);
+		Task<(IEnumerable<Order> Orders, int AllOrdersCount)> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize);
 
 		Task<OrderStatus?> GetStatusAsync(int orderId);
+
+		Task UpdateStatusAsync(Order orderEntity, OrderStatus newStatus);
 	}
 }

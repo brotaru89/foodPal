@@ -49,12 +49,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.PatchOrderStatus(System.Int32,FoodPal.Orders.Dtos.OrderStatusPatchDto)">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.PatchOrder(System.Int32,FoodPal.Orders.Dtos.OrderPatchDto)">
             <summary>
             
             </summary>
             <param name="orderId"></param>
-            <param name="orderStatusPatchDto"></param>
+            <param name="orderPatchDto"></param>
             <returns></returns>
         </member>
         <member name="T:FoodPal.Orders.Api.Filters.ExceptionFilter">

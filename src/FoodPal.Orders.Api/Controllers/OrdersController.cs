@@ -94,16 +94,17 @@ namespace FoodPal.Orders.Api.Controllers
 		/// 
 		/// </summary>
 		/// <param name="orderId"></param>
-		/// <param name="orderStatusPatchDto"></param>
+		/// <param name="orderPatchDto"></param>
 		/// <returns></returns>
 		[HttpPatch]
 		[ProducesResponseType(StatusCodes.Status202Accepted)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
-		public async Task<ActionResult<string>> PatchOrderStatus(int orderId, OrderStatusPatchDto orderStatusPatchDto)
+		public async Task<ActionResult<string>> PatchOrder(int orderId, OrderPatchDto orderPatchDto)
 		{
-			throw new NotImplementedException();
+			await _ordersService.PatchOrder(orderId, orderPatchDto);
+			return Ok();
 		}
 	}
 }
