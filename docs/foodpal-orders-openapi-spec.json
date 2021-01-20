@@ -1,0 +1,605 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FoodPal - Orders API",
+    "description": "FoodPal - Orders API microservice",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/Orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Returns a paged list of orders.",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "description": "",
+              "nullable": true
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "$ref": "#/components/schemas/OrderStatus"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Current result page no.",
+            "schema": {
+              "type": "integer",
+              "description": "Current result page no.",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "No. of returned records per page.",
+            "schema": {
+              "type": "integer",
+              "description": "No. of returned records per page.",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDtoPagedResultSetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Creates an order.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrderDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrderDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "integer",
+              "description": "",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderPatchDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderPatchDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderPatchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Orders/{orderId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Returns the specified order, if exists.",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "The order identifier.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The order identifier.",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/Orders/{orderId}/status": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderStatusDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrderStatus": {
+        "enum": [
+          100,
+          200,
+          300,
+          400,
+          500
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "OrderItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Item name.",
+            "nullable": true
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Item provider identifier.",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity, no. of same items.",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per item.",
+            "format": "double"
+          },
+          "totalPrice": {
+            "type": "number",
+            "description": "",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": ""
+      },
+      "DeliveryDetailsDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "integer",
+            "description": "",
+            "format": "int32"
+          },
+          "country": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Delivery details data transfer object."
+      },
+      "OrderStatusDto": {
+        "type": "object",
+        "properties": {
+          "statusId": {
+            "type": "integer",
+            "description": "",
+            "format": "int32"
+          },
+          "statusName": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Order status data transfer object."
+      },
+      "OrderDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "description": "Customer identifier",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Customer name.",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "description": "Customer email.",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemDto"
+            },
+            "description": "Collection of order items.",
+            "nullable": true
+          },
+          "deliveryDetails": {
+            "$ref": "#/components/schemas/DeliveryDetailsDto"
+          },
+          "orderStatus": {
+            "$ref": "#/components/schemas/OrderStatusDto"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Additional item comments.",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "description": "",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": ""
+      },
+      "PaginationInfoDto": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderDtoPagedResultSetDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderDto"
+            },
+            "nullable": true
+          },
+          "paginationInfo": {
+            "$ref": "#/components/schemas/PaginationInfoDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorInfoType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ErrorInfoDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ErrorInfoType"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NewOrderItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Item name.",
+            "nullable": true
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Item provider identifier.",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantity, no. of same items.",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price per item.",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Order item data transfer object."
+      },
+      "NewOrderDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "description": "Customer identifier",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string",
+            "description": "Customer name.",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "description": "Customer email.",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewOrderItemDto"
+            },
+            "description": "Collection of order items.",
+            "nullable": true
+          },
+          "deliveryDetails": {
+            "$ref": "#/components/schemas/DeliveryDetailsDto"
+          },
+          "orderStatus": {
+            "$ref": "#/components/schemas/OrderStatusDto"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Additional item comments.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Order data transfer object."
+      },
+      "OrderPatchDto": {
+        "type": "object",
+        "properties": {
+          "propertyName": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          },
+          "propertyValue": {
+            "type": "string",
+            "description": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": ""
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Orders",
+      "description": "Providers API methods for handling order requests."
+    }
+  ]
+}
