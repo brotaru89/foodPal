@@ -98,6 +98,11 @@ namespace FoodPal.Orders.Api
 
 			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
 			services.AddTransient<IOrdersService, OrdersService>();
+			
+			services.AddSingleton<IQueueNameProvider, QueueNameProvider>(sp =>
+			{
+				return new QueueNameProvider("brotaru");
+			});
 
 			var dbConnectionString = Configuration.GetConnectionString("OrdersConnectionString");
 

@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Order status data transfer object.
 	/// </summary>
-	public class OrderStatusDto
+	public class StatusDto
 	{
 		/// <summary>
 		/// 

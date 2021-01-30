@@ -19,13 +19,15 @@ namespace FoodPal.Orders.Services
 		private readonly IValidator<NewOrderDto> _newOrderValidator;
 		private readonly IOrdersUnitOfWork _orderUoW;
 		private readonly IMapper _mapper;
+		private readonly IQueueNameProvider _queueNameProvider;
 
-		public OrdersService(IMessageBroker messageBroker, IValidator<NewOrderDto> newOrderValidator, IOrdersUnitOfWork unitOfWork, IMapper mapper)
+		public OrdersService(IMessageBroker messageBroker, IValidator<NewOrderDto> newOrderValidator, IOrdersUnitOfWork unitOfWork, IMapper mapper, IQueueNameProvider queueNameProvider)
 		{
 			_messageBroker = messageBroker;
 			_newOrderValidator = newOrderValidator;
 			_orderUoW = unitOfWork;
 			_mapper = mapper;
+			_queueNameProvider = queueNameProvider;
 		}
 
 		public async Task<string> Create(NewOrderDto newOrder)
@@ -34,7 +36,7 @@ namespace FoodPal.Orders.Services
 
 			var payload = new MessageBrokerEnvelope(MessageTypes.NewOrder, newOrder);
 
-			await _messageBroker.SendMessageAsync(QueueNames.NewOrder, payload);
+			await _messageBroker.SendMessageAsync(_queueNameProvider.GetNewOrderQueueName(), payload);
 
 			return payload.RequestId;
 		}
@@ -53,7 +55,7 @@ namespace FoodPal.Orders.Services
 			return _mapper.Map<OrderDto>(order);
 		}
 
-		public async Task<OrderStatusDto> GetStatusAsync(int orderId)
+		public async Task<StatusDto> GetStatusAsync(int orderId)
 		{
 			ParameterChecks(new (Func<bool>, Exception)[]
 			{
@@ -64,7 +66,7 @@ namespace FoodPal.Orders.Services
 
 			if (!orderStatus.HasValue) throw new FoodPalNotFoundException(orderId.ToString());
 
-			return _mapper.Map<OrderStatusDto>(orderStatus);
+			return _mapper.Map<StatusDto>(orderStatus);
 		}
 
 		public async Task<PagedResultSetDto<OrderDto>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize)

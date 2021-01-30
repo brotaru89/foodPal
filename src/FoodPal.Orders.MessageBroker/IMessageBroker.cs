@@ -2,10 +2,16 @@
 
 namespace FoodPal.Orders.MessageBroker
 {
+	public delegate Task MessageReceivedEventHandler(string queueMessage);
+
 	public interface IMessageBroker
 	{
-		Task SendMessageAsync(string queueName, MessageBrokerEnvelope messageEnvelope);
+		Task SendMessageAsync<TMessage>(string queueName, TMessage messageEnvelope);
 
-		Task<MessageBrokerEnvelope> ReceiveMessageAsync(string queueName);
+		void RegisterMessageReceiver<TMessageType>(string queueName, MessageReceivedEventHandler messageHandler);
+
+		Task StartListenerAsync();
+
+		Task StopListenerAsync();
 	}
 }

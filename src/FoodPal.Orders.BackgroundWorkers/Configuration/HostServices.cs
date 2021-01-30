@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FoodPal.Orders.BackgroundServices.Handlers;
 using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
-using FoodPal.Orders.BackgroundWorker.Workers;
+using FoodPal.Orders.BackgroundWorkers.Workers;
 using FoodPal.Orders.Data;
 using FoodPal.Orders.Mappers;
 using FoodPal.Orders.MessageBroker;
@@ -25,6 +25,11 @@ namespace FoodPal.Orders.BackgroundWorker.Configuration
 			services.AddTransient<IMessageHandlerFactory, MessageHandlerFactory>();
 			services.AddTransient<NewOrderMessageHandler>();
 
+			services.AddSingleton<IQueueNameProvider, QueueNameProvider>(sp =>
+			{
+				return new QueueNameProvider("brotaru");
+			});
+
 			var dbConnectionString = hostingContext.Configuration.GetConnectionString("OrdersConnectionString");
 
 			services.AddTransient<IOrdersContextFactory, OrdersContextFactory>();
@@ -32,6 +37,7 @@ namespace FoodPal.Orders.BackgroundWorker.Configuration
 				new OrdersUnitOfWork(sp.GetService<IOrdersContextFactory>().CreateDbContext(dbConnectionString)));
 
 			services.AddHostedService<NewOrderWorker>();
+			services.AddHostedService<ProviderOrderItemsWorker>();
 		}
 	}
 }

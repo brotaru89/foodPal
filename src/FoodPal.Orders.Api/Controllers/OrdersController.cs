@@ -66,11 +66,11 @@ namespace FoodPal.Orders.Api.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("{orderId}/status")]
-		[ProducesResponseType(typeof(OrderStatusDto), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(StatusDto), StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
-		public async Task<ActionResult<OrderStatusDto>> GetOrderStatusById(int orderId)
+		public async Task<ActionResult<StatusDto>> GetOrderStatusById(int orderId)
 		{
 			var orderStatus = await _ordersService.GetStatusAsync(orderId);
 			return Ok(orderStatus);

@@ -7,7 +7,13 @@ namespace FoodPal.Orders.Mappers
 	{
 		public OrderStatusProfile()
 		{
-			CreateMap<OrderStatus, OrderStatusDto>().ConvertUsing(opt => new OrderStatusDto
+			CreateMap<OrderStatus, StatusDto>().ConvertUsing(opt => new StatusDto
+			{
+				StatusId = (int)opt,
+				StatusName = opt.ToString()
+			});
+
+			CreateMap<OrderItemStatus, StatusDto>().ConvertUsing(opt => new StatusDto
 			{
 				StatusId = (int)opt,
 				StatusName = opt.ToString()

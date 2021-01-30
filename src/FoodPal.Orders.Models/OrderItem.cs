@@ -1,4 +1,6 @@
-﻿namespace FoodPal.Orders.Models
+﻿using FoodPal.Orders.Enums;
+
+namespace FoodPal.Orders.Models
 {
 	public class OrderItem
 	{
@@ -15,5 +17,7 @@
 		public short Quantity { get; set; }
 
 		public decimal Price { get; set; }
+
+		public OrderItemStatus Status { get; set; }
 	}
 }

@@ -13,8 +13,6 @@ namespace FoodPal.Orders.Services.Validators
 			RuleFor(x => x.Items).NotEmpty();
 
 			RuleFor(x => x.DeliveryDetails).SetValidator(new DeliveryDetailsValidator());
-			RuleFor(x => x.OrderStatus).NotEmpty();
-			RuleFor(x => x.OrderStatus.StatusId).NotEmpty();
 		}
 	}
 }

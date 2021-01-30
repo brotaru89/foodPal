@@ -1,9 +1,7 @@
-﻿using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FoodPal.Orders.MessageBroker
@@ -11,72 +9,69 @@ namespace FoodPal.Orders.MessageBroker
 	public class ServiceBusMessageBroker : IMessageBroker
 	{
 		private readonly string _messageBrokerEndpoint;
-
-		public RetryPolicy DefaultRetryPolicy => new RetryExponential(new TimeSpan(0), new TimeSpan(0, 0, 5), 5);
+		private ServiceBusClient _sbMessageReceiverClient;
+		private ServiceBusProcessor _sbProcessor;
+		private MessageReceivedEventHandler _messageHandler;
 
 		public ServiceBusMessageBroker(IOptions<MessageBrokerConnectionSettings> connectionSettings)
 		{
 			_messageBrokerEndpoint = connectionSettings.Value.Endpoint;
 		}
 
-		public async Task SendMessageAsync(string queueName, MessageBrokerEnvelope messageEnvelope)
+		public async Task SendMessageAsync<TMessage>(string queueName, TMessage messageEnvelope)
 		{
-			var queueClient = new QueueClient(_messageBrokerEndpoint, queueName, ReceiveMode.ReceiveAndDelete, DefaultRetryPolicy);
-			await queueClient.SendAsync(CreateMessage(messageEnvelope));
-		}
-
-		//public async Task StartListen()
-		//{
-
-		//}
-
-		//public void StopListener()
-		//{
-
-		//}
-
-		public async Task<MessageBrokerEnvelope> ReceiveMessageAsync(string queueName)
-		{
-			var messageReceiver = new MessageReceiver(_messageBrokerEndpoint, queueName, ReceiveMode.ReceiveAndDelete, DefaultRetryPolicy);
-			var rawMessage = await messageReceiver.ReceiveAsync(TimeSpan.FromSeconds(2));
-
-			if (rawMessage != null)
+			await using (var sbClient = new ServiceBusClient(_messageBrokerEndpoint))
 			{
-				try
-				{
-					var payload = DeserializeMessage<MessageBrokerEnvelope>(rawMessage);
-					return payload;
-				}
-				catch (Exception)
-				{
-					await messageReceiver.AbandonAsync(rawMessage.SystemProperties.LockToken);
-					throw;
-				}
-			}
-			else
-			{
-				return default(MessageBrokerEnvelope);
+				var sender = sbClient.CreateSender(queueName);
+				var message = CreateMessage(messageEnvelope);
+
+				await sender.SendMessageAsync(message);
 			}
 		}
 
-		private static Message CreateMessage(MessageBrokerEnvelope messageEnvelope)
+		public void RegisterMessageReceiver<TMessageType>(string queueName, MessageReceivedEventHandler messageHandler)
+		{
+			_messageHandler = messageHandler;
+			_sbMessageReceiverClient = new ServiceBusClient(_messageBrokerEndpoint);
+			_sbProcessor = _sbMessageReceiverClient.CreateProcessor(queueName, new ServiceBusProcessorOptions() { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
+
+			_sbProcessor.ProcessMessageAsync += MessageHandlerAsync;
+			_sbProcessor.ProcessErrorAsync += ErrorHandlerAsync;
+		}
+
+		public async Task StartListenerAsync()
+		{
+			await _sbProcessor.StartProcessingAsync();
+		}
+
+		public async Task StopListenerAsync()
+		{
+			await _sbProcessor.StopProcessingAsync();
+			await _sbMessageReceiverClient.DisposeAsync();
+		}
+
+		#region Private methods
+
+		private static ServiceBusMessage CreateMessage<T>(T messageEnvelope)
 		{
 			var payload = JsonConvert.SerializeObject(messageEnvelope, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-			return new Message(Encoding.UTF8.GetBytes(payload));
+			return new ServiceBusMessage(payload);
 		}
 
-		private static TPayload DeserializeMessage<TPayload>(Message message)
+		private async Task MessageHandlerAsync(ProcessMessageEventArgs args)
 		{
-			try
-			{
-				var strMsg = Encoding.UTF8.GetString(message.Body);
-				var payload = JsonConvert.DeserializeObject<TPayload>(strMsg, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-				return payload;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Deserialization failed on message broker envelope.", ex);
-			}
+			var strMessage = args.Message.Body.ToString();
+
+			await _messageHandler(strMessage);
+
+			await args.CompleteMessageAsync(args.Message);
 		}
+
+		private async Task ErrorHandlerAsync(ProcessErrorEventArgs args)
+		{
+			throw new Exception("Error occurred in ServiceBus message handler.", args.Exception);
+		}
+
+		#endregion
 	}
 }

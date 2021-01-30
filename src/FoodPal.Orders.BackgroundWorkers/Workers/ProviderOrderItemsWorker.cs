@@ -1,4 +1,4 @@
-using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
+﻿using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
 using FoodPal.Orders.MessageBroker;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace FoodPal.Orders.BackgroundWorkers.Workers
 {
-	public class NewOrderWorker : IHostedService
+	public class ProviderOrderItemsWorker : IHostedService
 	{
-		private readonly ILogger<NewOrderWorker> _logger;
+		private readonly ILogger<ProviderOrderItemsWorker> _logger;
 		private readonly IMessageBroker _messageBroker;
 		private readonly IMessageHandlerFactory _messageHandlerFactory;
 		private readonly IQueueNameProvider _queueNameProvider;
 
-		public NewOrderWorker(ILogger<NewOrderWorker> logger, IMessageBroker messageBroker, IMessageHandlerFactory messageHandlerFactory, IQueueNameProvider queueNameProvider)
+		public ProviderOrderItemsWorker(ILogger<ProviderOrderItemsWorker> logger, IMessageBroker messageBroker, IMessageHandlerFactory messageHandlerFactory, IQueueNameProvider queueNameProvider)
 		{
 			_logger = logger;
 			_messageBroker = messageBroker;
@@ -42,7 +42,7 @@ namespace FoodPal.Orders.BackgroundWorkers.Workers
 			try
 			{
 				var payload = JsonConvert.DeserializeObject<MessageBrokerEnvelope>(messageEnvelopeAsString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
-				var handler = _messageHandlerFactory.Get(MessageTypes.NewOrder);
+				var handler = _messageHandlerFactory.Get(MessageTypes.OrderItemsProcessedByProvider);
 				await handler.ExecuteAsync(payload);
 			}
 			catch (Exception ex)

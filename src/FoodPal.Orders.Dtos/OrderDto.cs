@@ -36,7 +36,7 @@ namespace FoodPal.Orders.Dtos
 		/// <summary>
 		/// Order status.
 		/// </summary>
-		public OrderStatusDto OrderStatus { get; set; }
+		public StatusDto OrderStatus { get; set; }
 
 		/// <summary>
 		/// Additional item comments.

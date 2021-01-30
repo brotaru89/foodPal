@@ -29,5 +29,10 @@
 		/// 
 		/// </summary>
 		public decimal TotalPrice => Quantity * Price;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public StatusDto OrderItemStatus { get; set; }
 	}
 }

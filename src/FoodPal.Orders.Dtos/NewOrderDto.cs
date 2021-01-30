@@ -33,11 +33,6 @@ namespace FoodPal.Orders.Dtos
 		public DeliveryDetailsDto DeliveryDetails { get; set; }
 
 		/// <summary>
-		/// Order status.
-		/// </summary>
-		public OrderStatusDto OrderStatus { get; set; }
-
-		/// <summary>
 		/// Additional item comments.
 		/// </summary>
 		public string Comments { get; set; }

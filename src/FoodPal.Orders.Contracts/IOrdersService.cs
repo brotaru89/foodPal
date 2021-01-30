@@ -10,7 +10,7 @@ namespace FoodPal.Orders.Contracts
 
 		Task<OrderDto> GetByIdAsync(int orderId);
 
-		Task<OrderStatusDto> GetStatusAsync(int orderId);
+		Task<StatusDto> GetStatusAsync(int orderId);
 
 		Task<PagedResultSetDto<OrderDto>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize);
 

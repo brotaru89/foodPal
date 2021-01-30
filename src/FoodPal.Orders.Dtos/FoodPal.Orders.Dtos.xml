@@ -69,11 +69,6 @@
             Order delivery details.
             </summary>
         </member>
-        <member name="P:FoodPal.Orders.Dtos.NewOrderDto.OrderStatus">
-            <summary>
-            Order status.
-            </summary>
-        </member>
         <member name="P:FoodPal.Orders.Dtos.NewOrderDto.Comments">
             <summary>
             Additional item comments.
@@ -184,6 +179,11 @@
             
             </summary>
         </member>
+        <member name="P:FoodPal.Orders.Dtos.OrderItemDto.OrderItemStatus">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FoodPal.Orders.Dtos.OrderPatchDto">
             <summary>
             
@@ -199,17 +199,17 @@
             
             </summary>
         </member>
-        <member name="T:FoodPal.Orders.Dtos.OrderStatusDto">
+        <member name="T:FoodPal.Orders.Dtos.StatusDto">
             <summary>
             Order status data transfer object.
             </summary>
         </member>
-        <member name="P:FoodPal.Orders.Dtos.OrderStatusDto.StatusId">
+        <member name="P:FoodPal.Orders.Dtos.StatusDto.StatusId">
             <summary>
             
             </summary>
         </member>
-        <member name="P:FoodPal.Orders.Dtos.OrderStatusDto.StatusName">
+        <member name="P:FoodPal.Orders.Dtos.StatusDto.StatusName">
             <summary>
             
             </summary>
