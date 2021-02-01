@@ -19,7 +19,7 @@
             Constructor for Orders controller.
             </summary>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrderItemsController.PatchOrderStatus(System.Int32,System.Int32,FoodPal.Orders.Dtos.GenericPatchDto)">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrderItemsController.PatchOrderItem(System.Int32,System.Int32,FoodPal.Orders.Dtos.GenericPatchDto)">
             <summary>
             
             </summary>
