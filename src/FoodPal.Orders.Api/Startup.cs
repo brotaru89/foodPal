@@ -97,8 +97,9 @@ namespace FoodPal.Orders.Api
 			services.Configure<MessageBrokerConnectionSettings>(x => Configuration.Bind("MessageBrokerSettings", x));
 
 			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
-			services.AddTransient<IOrdersService, OrdersService>();
-			
+			services.AddTransient<IOrderService, OrderService>();
+			services.AddTransient<IOrderItemService, OrderItemService>();
+
 			services.AddSingleton<IQueueNameProvider, QueueNameProvider>(sp =>
 			{
 				return new QueueNameProvider("brotaru");

@@ -3,7 +3,7 @@
 namespace FoodPal.Orders.Api.Controllers
 {
 	/// <summary>
-	/// Base controller class for TDS
+	/// Base controller class for FoodPal Orders API
 	/// </summary>
 	[ApiController]
 	[Produces("application/json")]

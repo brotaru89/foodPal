@@ -5,6 +5,6 @@ namespace FoodPal.Orders.BackgroundServices.Handlers.Contracts
 {
 	public interface IMessageHandler
 	{
-		Task ExecuteAsync(MessageBrokerEnvelope messageEnvelope);
+		Task ExecuteAsync<TPayload>(MessageBrokerEnvelope<TPayload> messageEnvelope);
 	}
 }

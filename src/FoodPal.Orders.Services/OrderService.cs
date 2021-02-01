@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Services
 {
-	public class OrdersService : BaseService, IOrdersService
+	public class OrderService : BaseService, IOrderService
 	{
 		private readonly IMessageBroker _messageBroker;
 		private readonly IValidator<NewOrderDto> _newOrderValidator;
@@ -21,7 +21,7 @@ namespace FoodPal.Orders.Services
 		private readonly IMapper _mapper;
 		private readonly IQueueNameProvider _queueNameProvider;
 
-		public OrdersService(IMessageBroker messageBroker, IValidator<NewOrderDto> newOrderValidator, IOrdersUnitOfWork unitOfWork, IMapper mapper, IQueueNameProvider queueNameProvider)
+		public OrderService(IMessageBroker messageBroker, IValidator<NewOrderDto> newOrderValidator, IOrdersUnitOfWork unitOfWork, IMapper mapper, IQueueNameProvider queueNameProvider)
 		{
 			_messageBroker = messageBroker;
 			_newOrderValidator = newOrderValidator;
@@ -34,7 +34,7 @@ namespace FoodPal.Orders.Services
 		{
 			ValidateNewOrder(newOrder);
 
-			var payload = new MessageBrokerEnvelope(MessageTypes.NewOrder, newOrder);
+			var payload = new MessageBrokerEnvelope<NewOrderDto>(MessageTypes.NewOrder, newOrder);
 
 			await _messageBroker.SendMessageAsync(_queueNameProvider.GetNewOrderQueueName(), payload);
 
@@ -93,7 +93,7 @@ namespace FoodPal.Orders.Services
 			};
 		}
 
-		public async Task PatchOrder(int orderId, OrderPatchDto orderPatch)
+		public async Task PatchOrder(int orderId, GenericPatchDto orderPatch)
 		{
 			ParameterChecks(new (Func<bool>, Exception)[]
 			{
@@ -107,7 +107,6 @@ namespace FoodPal.Orders.Services
 			switch (orderPatch.PropertyName.ToLowerInvariant())
 			{
 				case "status":
-
 					await _orderUoW.OrdersRepository.UpdateStatusAsync(order, ParseOrderStatus(orderPatch.PropertyValue.ToString()));
 					break;
 				

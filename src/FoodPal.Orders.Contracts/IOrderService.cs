@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Contracts
 {
-	public interface IOrdersService
+	public interface IOrderService
 	{
 		Task<string> Create(NewOrderDto newOrder);
 
@@ -14,6 +14,6 @@ namespace FoodPal.Orders.Contracts
 
 		Task<PagedResultSetDto<OrderDto>> GetByFiltersAsync(string customerId, OrderStatus? status, int page, int pageSize);
 
-		Task PatchOrder(int orderId, OrderPatchDto orderPatch);
+		Task PatchOrder(int orderId, GenericPatchDto orderPatch);
 	}
 }

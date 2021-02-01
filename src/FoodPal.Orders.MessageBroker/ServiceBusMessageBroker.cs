@@ -29,7 +29,7 @@ namespace FoodPal.Orders.MessageBroker
 			}
 		}
 
-		public void RegisterMessageReceiver<TMessageType>(string queueName, MessageReceivedEventHandler messageHandler)
+		public void RegisterMessageReceiver(string queueName, MessageReceivedEventHandler messageHandler)
 		{
 			_messageHandler = messageHandler;
 			_sbMessageReceiverClient = new ServiceBusClient(_messageBrokerEndpoint);
@@ -54,7 +54,7 @@ namespace FoodPal.Orders.MessageBroker
 
 		private static ServiceBusMessage CreateMessage<T>(T messageEnvelope)
 		{
-			var payload = JsonConvert.SerializeObject(messageEnvelope, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+			var payload = JsonConvert.SerializeObject(messageEnvelope/*, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All }*/);
 			return new ServiceBusMessage(payload);
 		}
 

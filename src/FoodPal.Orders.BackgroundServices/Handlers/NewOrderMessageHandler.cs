@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
+using FoodPal.Orders.BackgroundServices.Settings;
 using FoodPal.Orders.Data;
 using FoodPal.Orders.Dtos;
 using FoodPal.Orders.Enums;
 using FoodPal.Orders.MessageBroker;
 using FoodPal.Orders.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +18,25 @@ namespace FoodPal.Orders.BackgroundServices.Handlers
 	public class NewOrderMessageHandler : BaseMessageHandler, IMessageHandler
 	{
 		private readonly ILogger<NewOrderMessageHandler> _logger;
+		private readonly HttpProviderEndpoints _httpProviderEndpoints;
 		private readonly IMapper _mapper;
 		private readonly IOrdersUnitOfWork _orderUoW;
 		private readonly IQueueNameProvider _queueNameProvider;
 		private readonly IMessageBroker _messageBroker;
 
-		public NewOrderMessageHandler(ILogger<NewOrderMessageHandler> logger, IMapper mapper, IOrdersUnitOfWork unitOfWork, IQueueNameProvider queueNameProvider, IMessageBroker messageBroker)
+		public NewOrderMessageHandler(ILogger<NewOrderMessageHandler> logger, IOptions<HttpProviderEndpoints> httpProviderEndpoints, IMapper mapper, IOrdersUnitOfWork unitOfWork, IQueueNameProvider queueNameProvider, IMessageBroker messageBroker)
 		{
 			_logger = logger;
+			_httpProviderEndpoints = httpProviderEndpoints.Value;
 			_mapper = mapper;
 			_orderUoW = unitOfWork;
 			_queueNameProvider = queueNameProvider;
 			_messageBroker = messageBroker;
 		}
 
-		public async Task ExecuteAsync(MessageBrokerEnvelope messageEnvelope)
+		public async Task ExecuteAsync<TPayload>(MessageBrokerEnvelope<TPayload> messageEnvelope)
 		{
-			var payload = GetEnvelopePayload<NewOrderDto>(messageEnvelope);
+			var payload = GetEnvelopePayload<TPayload, NewOrderDto>(messageEnvelope);
 			var persistedOrder = await SaveNewOrderAsync(payload);
 
 			var grouppedOrderItems = persistedOrder.Items.GroupBy(x => x.ProviderId).ToDictionary(k => k.Key, v => v.ToList());
@@ -43,14 +47,21 @@ namespace FoodPal.Orders.BackgroundServices.Handlers
 				{
 					case "xyz":
 					case "kfc":
-						await SendOrderRequestToProviderAsync(providerItems.Key.ToLower(), providerItems.Value);
+						await SendOrderRequestToProviderViaMessageBrokerAsync(providerItems.Key.ToLower(), persistedOrder.Id, providerItems.Value);
+						await UpdateOrderItemsStatus(providerItems.Value);
+						break;
+
+					case "chefsexperience":
+						await SendOrderRequestToProviderViaHttpAsync(_httpProviderEndpoints.ChefsExperienceBaseEndpoint, persistedOrder.Id, providerItems.Value);
 						await UpdateOrderItemsStatus(providerItems.Value);
 						break;
 
 					default:
-						throw new Exception("to do");
+						throw new Exception($"Handling order items for provider '{providerItems.Key}' is not supported.");
 				}
 			}
+
+			await UpdateOrderStatus(persistedOrder);
 		}
 
 		private async Task<Order> SaveNewOrderAsync(NewOrderDto newOrderDto)
@@ -76,18 +87,41 @@ namespace FoodPal.Orders.BackgroundServices.Handlers
 			}
 		}
 
-		private async Task SendOrderRequestToProviderAsync(string providerId, List<OrderItem> orderItems)
+		private async Task UpdateOrderStatus(Order order)
 		{
-			var messageContent = orderItems.Select(x => new ExternalOrderLine { Name = x.Name, Quantity = x.Quantity }).ToList();
-			var payload = new ExternalMessageBrokerEnvelope(messageContent);
+			await _orderUoW.OrdersRepository.UpdateStatusAsync(order, OrderStatus.InProgress);
+		}
+
+		private async Task SendOrderRequestToProviderViaMessageBrokerAsync(string providerId, int orderId, List<OrderItem> orderItems)
+		{
+			var messageContent = new MessageBrokerExternalOrderRequestDto
+			{
+				OrderId = orderId,
+				OrderItems = orderItems.Select(x => new MessageBrokerExternalOrderItemRequestDto { OrderItemId = x.Id, Name = x.Name, Quantity = x.Quantity }).ToList()
+			};
+			var payload = new MessageBrokerEnvelope<MessageBrokerExternalOrderRequestDto>(MessageTypes.ProviderNewOrder, messageContent);
 
 			await _messageBroker.SendMessageAsync(_queueNameProvider.GetProviderRequestQueueName(providerId), payload);
 		}
-	}
 
-	class ExternalOrderLine
-	{
-		public string Name { get; set; }
-		public short Quantity { get; set; }
+		private async Task SendOrderRequestToProviderViaHttpAsync(string providerUri, int orderId, List<OrderItem> orderItems)
+		{
+			var payload = new HttpExternalOrderRequestDto
+			{
+				OrderId = orderId,
+				OrderItems = orderItems.Select(x => new HttpExternalOrderItemRequestDto
+				{
+					OrderItemId = x.Id,
+					Name = x.Name,
+					Quantity = x.Quantity,
+					CallbackEndpoint = new Uri(
+						new Uri(_httpProviderEndpoints.SelfCallbackBaseEndpoint),
+						$"OrderItems?orderId={orderId}&orderItemId={x.Id}&PropertyName=status&PropertyValue={(int)OrderItemStatus.Ready}").ToString()
+				})
+				.ToList()
+			};
+
+			var response = await new HttpProxy().PostAsync<HttpExternalOrderRequestDto, string>(providerUri, payload);
+		}
 	}
 }

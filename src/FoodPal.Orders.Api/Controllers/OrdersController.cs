@@ -3,7 +3,6 @@ using FoodPal.Orders.Dtos;
 using FoodPal.Orders.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace FoodPal.Orders.Api.Controllers
@@ -13,12 +12,12 @@ namespace FoodPal.Orders.Api.Controllers
 	/// </summary>
 	public class OrdersController : ApiBaseController
 	{
-		private readonly IOrdersService _ordersService;
+		private readonly IOrderService _ordersService;
 
 		/// <summary>
 		/// Constructor for Orders controller.
 		/// </summary>
-		public OrdersController(IOrdersService ordersService)
+		public OrdersController(IOrderService ordersService)
 		{
 			_ordersService = ordersService;
 		}
@@ -101,7 +100,7 @@ namespace FoodPal.Orders.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesErrorResponseType(typeof(ErrorInfoDto))]
-		public async Task<ActionResult<string>> PatchOrder(int orderId, OrderPatchDto orderPatchDto)
+		public async Task<ActionResult<string>> PatchOrder(int orderId, GenericPatchDto orderPatchDto)
 		{
 			await _ordersService.PatchOrder(orderId, orderPatchDto);
 			return Ok();

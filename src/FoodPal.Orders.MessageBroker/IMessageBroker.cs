@@ -8,7 +8,7 @@ namespace FoodPal.Orders.MessageBroker
 	{
 		Task SendMessageAsync<TMessage>(string queueName, TMessage messageEnvelope);
 
-		void RegisterMessageReceiver<TMessageType>(string queueName, MessageReceivedEventHandler messageHandler);
+		void RegisterMessageReceiver(string queueName, MessageReceivedEventHandler messageHandler);
 
 		Task StartListenerAsync();
 

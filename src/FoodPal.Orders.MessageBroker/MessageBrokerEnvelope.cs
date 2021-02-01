@@ -2,19 +2,19 @@
 
 namespace FoodPal.Orders.MessageBroker
 {
-	public class MessageBrokerEnvelope
+	public class MessageBrokerEnvelope<TPayload>
 	{
 		public string RequestId { get; set; }
 
 		public string MessageType { get; set; }
 
-		public object Data { get; set; }
+		public TPayload Data { get; set; }
 
 		public MessageBrokerEnvelope() { }
 
-		public MessageBrokerEnvelope(string messageType, object payload) : this(messageType, payload, Guid.NewGuid()) { }
+		public MessageBrokerEnvelope(string messageType, TPayload payload) : this(messageType, payload, Guid.NewGuid()) { }
 
-		public MessageBrokerEnvelope(string messageType, object payload, Guid requestId)
+		public MessageBrokerEnvelope(string messageType, TPayload payload, Guid requestId)
 		{
 			MessageType = messageType;
 			Data = payload;

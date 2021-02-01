@@ -6,15 +6,34 @@
     <members>
         <member name="T:FoodPal.Orders.Api.Controllers.ApiBaseController">
             <summary>
-            Base controller class for TDS
+            Base controller class for FoodPal Orders API
             </summary>
+        </member>
+        <member name="T:FoodPal.Orders.Api.Controllers.OrderItemsController">
+            <summary>
+            Providers API methods for handling order item requests.
+            </summary>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrderItemsController.#ctor(FoodPal.Orders.Contracts.IOrderItemService)">
+            <summary>
+            Constructor for Orders controller.
+            </summary>
+        </member>
+        <member name="M:FoodPal.Orders.Api.Controllers.OrderItemsController.PatchOrderStatus(System.Int32,System.Int32,FoodPal.Orders.Dtos.GenericPatchDto)">
+            <summary>
+            
+            </summary>
+            <param name="orderId"></param>
+            <param name="orderItemId"></param>
+            <param name="orderPatchDto"></param>
+            <returns></returns>
         </member>
         <member name="T:FoodPal.Orders.Api.Controllers.OrdersController">
             <summary>
             Providers API methods for handling order requests.
             </summary>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.#ctor(FoodPal.Orders.Contracts.IOrdersService)">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.#ctor(FoodPal.Orders.Contracts.IOrderService)">
             <summary>
             Constructor for Orders controller.
             </summary>
@@ -49,7 +68,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.PatchOrder(System.Int32,FoodPal.Orders.Dtos.OrderPatchDto)">
+        <member name="M:FoodPal.Orders.Api.Controllers.OrdersController.PatchOrder(System.Int32,FoodPal.Orders.Dtos.GenericPatchDto)">
             <summary>
             
             </summary>

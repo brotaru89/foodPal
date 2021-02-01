@@ -19,6 +19,7 @@ namespace FoodPal.Orders.BackgroundServices.Handlers
 			return messageType switch
 			{
 				MessageTypes.NewOrder => _serviceProvider.GetRequiredService<NewOrderMessageHandler>(),
+				MessageTypes.OrderItemsProcessedByProvider => _serviceProvider.GetRequiredService<ProviderProcessedOrderItemsHandler>(),
 				_ => throw new Exception(),
 			};
 		}

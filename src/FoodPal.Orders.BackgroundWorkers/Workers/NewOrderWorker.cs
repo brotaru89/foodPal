@@ -1,4 +1,5 @@
 using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
+using FoodPal.Orders.Dtos;
 using FoodPal.Orders.MessageBroker;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,7 @@ namespace FoodPal.Orders.BackgroundWorkers.Workers
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
 			_logger.LogDebug($"{this.GetType().Name} starting; registering message handler.");
-			_messageBroker.RegisterMessageReceiver<MessageBrokerEnvelope>(_queueNameProvider.GetNewOrderQueueName(), HandleNextMessageAsync);
+			_messageBroker.RegisterMessageReceiver(_queueNameProvider.GetNewOrderQueueName(), HandleNextMessageAsync);
 			await _messageBroker.StartListenerAsync();
 		}
 
@@ -41,7 +42,7 @@ namespace FoodPal.Orders.BackgroundWorkers.Workers
 		{
 			try
 			{
-				var payload = JsonConvert.DeserializeObject<MessageBrokerEnvelope>(messageEnvelopeAsString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+				var payload = JsonConvert.DeserializeObject<MessageBrokerEnvelope<NewOrderDto>>(messageEnvelopeAsString);
 				var handler = _messageHandlerFactory.Get(MessageTypes.NewOrder);
 				await handler.ExecuteAsync(payload);
 			}

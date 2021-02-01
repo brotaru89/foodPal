@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodPal.Orders.BackgroundServices.Handlers;
 using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
+using FoodPal.Orders.BackgroundServices.Settings;
 using FoodPal.Orders.BackgroundWorkers.Workers;
 using FoodPal.Orders.Data;
 using FoodPal.Orders.Mappers;
@@ -18,12 +19,15 @@ namespace FoodPal.Orders.BackgroundWorker.Configuration
 			// AutoMapper
 			services.AddAutoMapper(typeof(AbstractProfile).Assembly);
 
+			services.Configure<HttpProviderEndpoints>(x => hostingContext.Configuration.Bind("HttpProviderEndpoints", x));
+
 			// Service Bus message broker
 			services.Configure<MessageBrokerConnectionSettings>(x => hostingContext.Configuration.Bind("MessageBrokerSettings", x));
 			services.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
 
 			services.AddTransient<IMessageHandlerFactory, MessageHandlerFactory>();
 			services.AddTransient<NewOrderMessageHandler>();
+			services.AddTransient<ProviderProcessedOrderItemsHandler>();
 
 			services.AddSingleton<IQueueNameProvider, QueueNameProvider>(sp =>
 			{
@@ -37,7 +41,7 @@ namespace FoodPal.Orders.BackgroundWorker.Configuration
 				new OrdersUnitOfWork(sp.GetService<IOrdersContextFactory>().CreateDbContext(dbConnectionString)));
 
 			services.AddHostedService<NewOrderWorker>();
-			services.AddHostedService<ProviderOrderItemsWorker>();
+			services.AddHostedService<KfcProviderOrderItemsWorker>();
 		}
 	}
 }

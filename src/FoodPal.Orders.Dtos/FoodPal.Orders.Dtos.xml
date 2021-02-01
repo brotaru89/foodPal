@@ -39,6 +39,21 @@
             
             </summary>
         </member>
+        <member name="T:FoodPal.Orders.Dtos.GenericPatchDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.GenericPatchDto.PropertyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:FoodPal.Orders.Dtos.GenericPatchDto.PropertyValue">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:FoodPal.Orders.Dtos.NewOrderDto">
             <summary>
             Order data transfer object.
@@ -180,21 +195,6 @@
             </summary>
         </member>
         <member name="P:FoodPal.Orders.Dtos.OrderItemDto.OrderItemStatus">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:FoodPal.Orders.Dtos.OrderPatchDto">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:FoodPal.Orders.Dtos.OrderPatchDto.PropertyName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:FoodPal.Orders.Dtos.OrderPatchDto.PropertyValue">
             <summary>
             
             </summary>

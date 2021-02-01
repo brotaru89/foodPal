@@ -3,7 +3,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public class OrderPatchDto
+	public class GenericPatchDto
 	{
 		/// <summary>
 		/// 
