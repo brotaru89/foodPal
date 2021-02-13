@@ -15,7 +15,7 @@
     <ProjectReference Include="..\FoodPal.Orders.Data\FoodPal.Orders.Data.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Dtos\FoodPal.Orders.Dtos.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Exceptions\FoodPal.Orders.Exceptions.csproj" />
-    <ProjectReference Include="..\FoodPal.Orders.MessageBroker\FoodPal.Orders.MessageBroker.csproj" />
+    <ProjectReference Include="..\FoodPal.Orders.MessageBroker.Contracts\FoodPal.Orders.MessageBroker.Contracts.csproj" />
     <ProjectReference Include="..\FoodPal.Orders.Models\FoodPal.Orders.Models.csproj" />
   </ItemGroup>
 

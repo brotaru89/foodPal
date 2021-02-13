@@ -15,10 +15,6 @@ namespace FoodPal.Orders.Data
 			_orderItemsRepository = new Lazy<IOrderItemsRepository>(new OrderItemsRepository(dbContext));
 		}
 
-		//public void GetContext()
-		//{
-		//}
-
 		public IOrdersRepository OrdersRepository => _ordersRepository.Value;
 
 		public IOrderItemsRepository OrderItemsRepository => _orderItemsRepository.Value;

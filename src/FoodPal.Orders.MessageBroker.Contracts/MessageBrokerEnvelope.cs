@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodPal.Orders.MessageBroker
+namespace FoodPal.Orders.MessageBroker.Contracts
 {
 	public class MessageBrokerEnvelope<TPayload>
 	{

@@ -5,7 +5,7 @@ using FoodPal.Orders.Data;
 using FoodPal.Orders.Dtos;
 using FoodPal.Orders.Enums;
 using FoodPal.Orders.Exceptions;
-using FoodPal.Orders.MessageBroker;
+using FoodPal.Orders.MessageBroker.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

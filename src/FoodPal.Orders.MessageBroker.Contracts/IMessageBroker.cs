@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace FoodPal.Orders.MessageBroker
+namespace FoodPal.Orders.MessageBroker.Contracts
 {
 	public delegate Task MessageReceivedEventHandler(string queueMessage);
 

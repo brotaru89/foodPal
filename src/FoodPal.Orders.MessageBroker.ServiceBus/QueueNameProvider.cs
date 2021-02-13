@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FoodPal.Orders.MessageBroker.Contracts;
+using System;
 
-namespace FoodPal.Orders.MessageBroker
+namespace FoodPal.Orders.MessageBroker.ServiceBus
 {
 	public class QueueNameProvider : IQueueNameProvider
 	{

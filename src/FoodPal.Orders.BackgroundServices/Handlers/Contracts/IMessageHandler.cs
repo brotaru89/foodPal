@@ -1,4 +1,4 @@
-﻿using FoodPal.Orders.MessageBroker;
+﻿using FoodPal.Orders.MessageBroker.Contracts;
 using System.Threading.Tasks;
 
 namespace FoodPal.Orders.BackgroundServices.Handlers.Contracts

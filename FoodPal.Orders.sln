@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Data.Contrac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{213689DC-8503-4805-9AA1-E6D40A206F69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.MessageBroker", "src\FoodPal.Orders.MessageBroker\FoodPal.Orders.MessageBroker.csproj", "{50BDBB7F-8EDC-4853-9CD9-48349F80891C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.MessageBroker.ServiceBus", "src\FoodPal.Orders.MessageBroker.ServiceBus\FoodPal.Orders.MessageBroker.ServiceBus.csproj", "{50BDBB7F-8EDC-4853-9CD9-48349F80891C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Exceptions", "src\FoodPal.Orders.Exceptions\FoodPal.Orders.Exceptions.csproj", "{27F44D79-3D29-453E-919B-A55639497BE4}"
 EndProject
@@ -27,11 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.BackgroundWo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackgroundServices", "BackgroundServices", "{096C9C97-657F-43D6-BDEA-1B0E83D308BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.BackgroundServices", "src\FoodPal.Orders.BackgroundServices\FoodPal.Orders.BackgroundServices.csproj", "{B865DBBE-8A49-4A69-8D2D-B22603B05371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.BackgroundServices", "src\FoodPal.Orders.BackgroundServices\FoodPal.Orders.BackgroundServices.csproj", "{B865DBBE-8A49-4A69-8D2D-B22603B05371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Enums", "src\FoodPal.Orders.Enums\FoodPal.Orders.Enums.csproj", "{6504B0C3-51F7-458B-80E4-085FB9DAE2FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Enums", "src\FoodPal.Orders.Enums\FoodPal.Orders.Enums.csproj", "{6504B0C3-51F7-458B-80E4-085FB9DAE2FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodPal.Orders.Mappers", "src\FoodPal.Orders.Mappers\FoodPal.Orders.Mappers.csproj", "{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.Mappers", "src\FoodPal.Orders.Mappers\FoodPal.Orders.Mappers.csproj", "{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodPal.Orders.MessageBroker.Contracts", "src\FoodPal.Orders.MessageBroker.Contracts\FoodPal.Orders.MessageBroker.Contracts.csproj", "{5A021CCB-7C52-4E0A-BE84-F74B7EC34001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A021CCB-7C52-4E0A-BE84-F74B7EC34001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A021CCB-7C52-4E0A-BE84-F74B7EC34001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A021CCB-7C52-4E0A-BE84-F74B7EC34001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A021CCB-7C52-4E0A-BE84-F74B7EC34001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +109,7 @@ Global
 		{B865DBBE-8A49-4A69-8D2D-B22603B05371} = {096C9C97-657F-43D6-BDEA-1B0E83D308BF}
 		{6504B0C3-51F7-458B-80E4-085FB9DAE2FC} = {213689DC-8503-4805-9AA1-E6D40A206F69}
 		{E3AC1ABD-0F91-463D-AA8B-853FE4BCAE99} = {213689DC-8503-4805-9AA1-E6D40A206F69}
+		{5A021CCB-7C52-4E0A-BE84-F74B7EC34001} = {213689DC-8503-4805-9AA1-E6D40A206F69}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42C29292-A079-4771-9206-BEBCC4EA6E0A}

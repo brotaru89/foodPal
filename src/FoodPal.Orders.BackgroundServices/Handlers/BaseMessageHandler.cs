@@ -1,4 +1,4 @@
-﻿using FoodPal.Orders.MessageBroker;
+﻿using FoodPal.Orders.MessageBroker.Contracts;
 using System;
 
 namespace FoodPal.Orders.BackgroundServices.Handlers

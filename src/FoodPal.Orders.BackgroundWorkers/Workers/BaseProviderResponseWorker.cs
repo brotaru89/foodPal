@@ -1,5 +1,5 @@
 ﻿using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
-using FoodPal.Orders.MessageBroker;
+using FoodPal.Orders.MessageBroker.Contracts;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;

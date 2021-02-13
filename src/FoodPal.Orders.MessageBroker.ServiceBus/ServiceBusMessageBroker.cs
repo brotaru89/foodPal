@@ -1,10 +1,11 @@
 ﻿using Azure.Messaging.ServiceBus;
+using FoodPal.Orders.MessageBroker.Contracts;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
-namespace FoodPal.Orders.MessageBroker
+namespace FoodPal.Orders.MessageBroker.ServiceBus
 {
 	public class ServiceBusMessageBroker : IMessageBroker
 	{

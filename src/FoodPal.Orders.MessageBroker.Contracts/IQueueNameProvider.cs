@@ -1,4 +1,4 @@
-﻿namespace FoodPal.Orders.MessageBroker
+﻿namespace FoodPal.Orders.MessageBroker.Contracts
 {
 	public interface IQueueNameProvider
 	{

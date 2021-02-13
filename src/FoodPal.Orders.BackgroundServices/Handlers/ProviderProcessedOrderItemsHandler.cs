@@ -3,7 +3,7 @@ using FoodPal.Orders.BackgroundServices.Handlers.Contracts;
 using FoodPal.Orders.Data;
 using FoodPal.Orders.Dtos;
 using FoodPal.Orders.Enums;
-using FoodPal.Orders.MessageBroker;
+using FoodPal.Orders.MessageBroker.Contracts;
 using FoodPal.Orders.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
